@@ -8,9 +8,10 @@ from matplotlib import pyplot as plt
 import matplotlib.dates as mdates
 
 
-#Class to handle rainfall, temperature and data data for alternative monthly 
-#display option
+
 class DataHandler():
+	"""Class to handle rainfall, temperature and data data for alternative 
+	monthly display option"""
 	def __init__(self, current_date):
 		self.current_date = current_date
 		self.months = [current_date]
@@ -23,10 +24,9 @@ class DataHandler():
 		
 		self.count = 0
 	
-
-	#add data from new line in csv file. If a new month is detected, calculate 
-	#averages and store the information. 
 	def add_data(self, date, rainfall, temperature):
+		"""add data from new line in csv file. If a new month is detected, 
+		calculate averages and store the information.""" 
 		if self.current_date.month == date.month:
 			self.rainfall_average += rainfall
 			self.temperature_average += temperature
@@ -34,10 +34,9 @@ class DataHandler():
 		else:
 			self.months.append(date)
 			self.find_monthly_averages(date, rainfall, temperature)
-
 	
-	#method that calculates the monthly average rainfall, temperature
 	def find_monthly_averages(self, date, rainfall, temperature):
+		"""method that calculates the monthly average rainfall, temperature"""
 		self.monthly_rainfall_average.append(
 			int(round(self.rainfall_average/self.count)))
 		self.monthly_temperature_average.append(
@@ -46,10 +45,10 @@ class DataHandler():
 		self.temperature_average = temperature
 		self.rainfall_average = rainfall
 		self.current_date = date
-		
 	
-	#Gets the average rainfall, temperature data after calculating for December
 	def get_data(self):
+		"""Gets the average rainfall, temperature data after calculating 
+		for December"""
 		date = datetime(2014,12,1)
 		self.find_monthly_averages(date, 0, 0)
 		return self.months, self.monthly_temperature_average, self.monthly_rainfall_average
